@@ -1,4 +1,4 @@
-from src.models import Apartment, Bill, Parameters, Tenant, Transfer
+from src.models import Apartment, ApartmentSettlement, Bill, Parameters, Tenant, Transfer
 
 
 class Manager:
@@ -55,3 +55,26 @@ class Manager:
             bills = [bill for bill in bills if bill.settlement_month == month]
 
         return sum((bill.amount_pln for bill in bills), 0.0)
+
+    def create_apartment_settlement(self, apartment_key: str, year: int, month: int) -> ApartmentSettlement | None:
+        """Tworzy rozliczenie mieszkania za dany miesiąc.
+
+        Returns:
+            ApartmentSettlement z sumą rachunków za miesiąc albo None,
+            gdy mieszkanie nie istnieje.
+        """
+        total_bills_pln = self.get_apartment_costs(apartment_key, year, month)
+        if total_bills_pln is None:
+            return None
+
+        # TODO: uwzględnić przelewy w kolejnych krokach
+        total_rent_pln = 0.0
+
+        return ApartmentSettlement(
+            apartment=apartment_key,
+            year=year,
+            month=month,
+            total_rent_pln=total_rent_pln,
+            total_bills_pln=total_bills_pln,
+            total_due_pln=total_bills_pln,
+        )
