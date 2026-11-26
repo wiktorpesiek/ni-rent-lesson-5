@@ -39,6 +39,39 @@ def test_costs_ignore_bills_of_other_apartment(manager):
     assert manager.get_apartment_costs('apart-polanka', 2025, 1) == 910.0
 
 
+@pytest.mark.parametrize('month', [0, 13, -1])
+def test_costs_invalid_month_raises(manager, month):
+    with pytest.raises(ValueError):
+        manager.get_apartment_costs('apart-polanka', 2025, month)
+
+
+def test_costs_month_without_year_raises(manager):
+    with pytest.raises(ValueError):
+        manager.get_apartment_costs('apart-polanka', month=1)
+
+
+def test_costs_year_only_and_full_history(manager):
+    manager.bills.append(Bill(
+        apartment='apart-polanka',
+        date_due='2025-04-10',
+        settlement_year=2025,
+        settlement_month=3,
+        amount_pln=90.0,
+        type='water'
+    ))
+    manager.bills.append(Bill(
+        apartment='apart-polanka',
+        date_due='2023-12-10',
+        settlement_year=2023,
+        settlement_month=11,
+        amount_pln=100.0,
+        type='gas'
+    ))
+    assert manager.get_apartment_costs('apart-polanka', 2025) == 1000.0
+    assert manager.get_apartment_costs('apart-polanka', 2023) == 100.0
+    assert manager.get_apartment_costs('apart-polanka') == 1100.0
+
+
 # --- Test prowadzącego (gałąź extra-integration-test) ---
 
 def test_apartment_costs_with_optional_parameters():

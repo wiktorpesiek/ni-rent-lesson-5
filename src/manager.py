@@ -35,7 +35,16 @@ class Manager:
         Returns:
             Suma kwot rachunków jako float (0.0, gdy brak pasujących rachunków)
             albo None, gdy mieszkanie nie istnieje.
+
+        Raises:
+            ValueError: gdy month jest spoza zakresu 1..12 albo podano month bez year.
         """
+        if month is not None:
+            if year is None:
+                raise ValueError("Nie można podać miesiąca bez roku")
+            if not 1 <= month <= 12:
+                raise ValueError(f"Miesiąc musi być z zakresu 1..12, otrzymano {month}")
+
         if apartment_key not in self.apartments:
             return None
 
