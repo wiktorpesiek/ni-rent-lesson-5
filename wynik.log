@@ -1,0 +1,35 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\wikto\Desktop\LAB_NARZEDZIA_26_11_WP\ni-rent-lesson-5\venv\Scripts\python.exe
+rootdir: C:\Users\wikto\Desktop\LAB_NARZEDZIA_26_11_WP\ni-rent-lesson-5
+collecting ... collected 28 items
+
+tests/test_apartment_settlement.py::test_settlement_for_month_with_bills PASSED [  3%]
+tests/test_apartment_settlement.py::test_settlement_for_month_without_bills PASSED [  7%]
+tests/test_apartment_settlement.py::test_bill_from_other_month_does_not_change_settlement PASSED [ 10%]
+tests/test_apartment_settlement.py::test_settlement_for_missing_apartment_is_none PASSED [ 14%]
+tests/test_complex_integration.py::test_costs_for_missing_apartment_is_none PASSED [ 17%]
+tests/test_complex_integration.py::test_costs_without_bills_in_month_is_zero PASSED [ 21%]
+tests/test_complex_integration.py::test_costs_sum_bills_in_month PASSED  [ 25%]
+tests/test_complex_integration.py::test_costs_year_matches_but_month_does_not PASSED [ 28%]
+tests/test_complex_integration.py::test_costs_ignore_bills_of_other_apartment PASSED [ 32%]
+tests/test_complex_integration.py::test_costs_invalid_month_raises[0] PASSED [ 35%]
+tests/test_complex_integration.py::test_costs_invalid_month_raises[13] PASSED [ 39%]
+tests/test_complex_integration.py::test_costs_invalid_month_raises[-1] PASSED [ 42%]
+tests/test_complex_integration.py::test_costs_month_without_year_raises PASSED [ 46%]
+tests/test_complex_integration.py::test_costs_year_only_and_full_history PASSED [ 50%]
+tests/test_complex_integration.py::test_apartment_costs_with_optional_parameters PASSED [ 53%]
+tests/test_integration.py::test_load_data PASSED                         [ 57%]
+tests/test_integration.py::test_tenants_in_manager PASSED                [ 60%]
+tests/test_integration.py::test_if_tenants_have_valid_apartment_keys PASSED [ 64%]
+tests/test_tenant_settlement.py::test_three_tenants_share_bills_equally PASSED [ 67%]
+tests/test_tenant_settlement.py::test_two_tenants_share_bills_equally PASSED [ 71%]
+tests/test_tenant_settlement.py::test_single_tenant_pays_all_bills PASSED [ 75%]
+tests/test_tenant_settlement.py::test_tenant_from_other_apartment_is_not_included PASSED [ 78%]
+tests/test_tenant_settlement.py::test_no_tenants_returns_empty_list PASSED [ 82%]
+tests/test_tenant_settlement.py::test_month_without_bills_gives_zero_bills PASSED [ 85%]
+tests/test_unit.py::test_apartment_fields PASSED                         [ 89%]
+tests/test_unit.py::test_apartment_from_dict PASSED                      [ 92%]
+tests/test_unit.py::test_tenant_fields PASSED                            [ 96%]
+tests/test_unit.py::test_tenant_from_dict PASSED                         [100%]
+
+============================= 28 passed in 0.72s ==============================
