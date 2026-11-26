@@ -1,4 +1,4 @@
-from src.models import Apartment, ApartmentSettlement, Bill, Parameters, Tenant, Transfer
+from src.models import Apartment, ApartmentSettlement, Bill, Parameters, Tenant, TenantSettlement, Transfer
 
 
 class Manager:
@@ -78,3 +78,38 @@ class Manager:
             total_bills_pln=total_bills_pln,
             total_due_pln=total_bills_pln,
         )
+
+    def create_tenant_settlements(self, apartment_settlement: ApartmentSettlement) -> list[TenantSettlement]:
+        """Dzieli rozliczenie mieszkania równo między jego najemców.
+
+        Returns:
+            Lista TenantSettlement (po jednym na najemcę mieszkania);
+            pusta lista, gdy mieszkanie nie ma najemców.
+        """
+        # Najemców NIE filtrujemy po datach umów: w danych bazowych umowy kończą się
+        # w 2024, a rachunki są z 2025, więc taki filtr odrzuciłby wszystkich najemców.
+        tenant_keys = [
+            key for key, tenant in self.tenants.items()
+            if tenant.apartment == apartment_settlement.apartment
+        ]
+        if not tenant_keys:
+            return []
+
+        bills_pln = apartment_settlement.total_bills_pln / len(tenant_keys)
+        # TODO: uwzględnić czynsz i przelewy najemców w kolejnych krokach
+        rent_pln = 0.0
+        total_due_pln = bills_pln
+
+        return [
+            TenantSettlement(
+                tenant=key,
+                apartment_settlement=apartment_settlement.apartment,
+                month=apartment_settlement.month,
+                year=apartment_settlement.year,
+                rent_pln=rent_pln,
+                bills_pln=bills_pln,
+                total_due_pln=total_due_pln,
+                balance_pln=0.0 - total_due_pln,
+            )
+            for key in tenant_keys
+        ]
